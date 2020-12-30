@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSS sprite sheet animation</title>
+    </head>
+
+    <style>
+        main {
+            width: 300px;
+            height: 300px;
+
+            border: 1px solid black;
+            border-radius: 100%;
+
+            position: absolute;
+            top: 40%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+        }
+        @keyframes spriteAnimation {
+            100% { background-position-x: -582px;}
+        }
+        .sprite {
+            width: 95px;
+            height: 97px;
+
+            background: transparent url("sprite.png") 0 0 no-repeat;
+            margin: 2% auto;
+
+            animation: spriteAnimation 1s steps(6) infinite;
+
+            position: absolute;
+            top: 40%;
+            left: 50%;
+
+            transform: translate(-50%, -50%);
+            
+        }
+    </style>
+
+    <body>
+        <main>
+            <div class="sprite">
+            </div>
+        </main>
+    </body>
+</html>
