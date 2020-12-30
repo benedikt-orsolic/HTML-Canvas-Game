@@ -1,0 +1,3 @@
+# Resources
+* Flor texture - https://www.youtube.com/redirect?event=video_description&v=GVuU25pGaYo&redir_token=QUFFLUhqazdlOG1xc25zWjYzcXdSWk9nVFF4a25oZFNid3xBQ3Jtc0tuRG9WWW1vc2hvUEFQemdyS2tJOUVHaDZmeDFqdHVzNi1td2UtTkxnYldUWjZmc1BPa3NQY0ZfVzZ4OVBwZFAxZHJpektpR1RwQ2tJUGE2N3VJdUxOdzBEcFYyV2ZWcjg3M2NIOTNXbW9wM2pxVURJNA%3D%3D&q=https%3A%2F%2Fopengameart.org%2Fcontent%2Ftileable-brick-ground-textures-set-2
+* Character Sprite sheet - https://www.spriters-resource.com/pc_computer/cupheaddontdealwiththedevil/sheet/97184/
