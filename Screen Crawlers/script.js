@@ -7,23 +7,31 @@ class Crawler {
     }
 
     constructor (direction) {
-        this.currentFrame = {x:0, y:7};  
+        this.currentFrame = {x:0, y:3};  
+        this.currentPos = {x:0, y:0};
+        this.speed = 1;
+
         this.dir = direction;
         
         this.frameW = 103.0625;
         this.frameH = 113.125;
     }
 
-    drawFrame ( canvasContext, frameX, frameY, img ) {
+    drawFrame ( canvasContext, img ) {
 
         canvasContext.drawImage(img, 
             this.frameW * this.currentFrame.x, this.frameH * this.currentFrame.y, this.frameW, this.frameH, 
-            frameX, frameY, this.frameW*1.5, this.frameH*1.5);
+            this.currentPos.x, this.currentPos.y, this.frameW, this.frameH);
 
         //Jump
         this.currentFrame.x++;
-        this.currentFrame.x = this.currentFrame.x < 0 ? 4 : this.currentFrame.x;
-        this.currentFrame.x = this.currentFrame.x > 4 ? 0 : this.currentFrame.x;
+        this.currentFrame.x = this.currentFrame.x < 4 ? 13 : this.currentFrame.x;
+        this.currentFrame.x = this.currentFrame.x > 13 ? 4 : this.currentFrame.x;
+    }
+
+    setPos (newX, newY) {
+        this.currentPos.x = newX;
+        this.currentPos.y = newY;
     }
 }
 
@@ -35,7 +43,6 @@ const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-Crawler.initClass();
 let c = new Crawler( 0 );
 
 let sptMap = new Image();
@@ -49,7 +56,11 @@ sptMap.onload = function() {
 
 function animate(){
     context.clearRect(0, 0, canvas.height, canvas.width);
-    c.drawFrame( context, 50, 50, sptMap);
+    let newX = c.currentPos.x+=6
+    if ( newX  > canvas.width) newX = 0;
+    c.setPos( newX, 50);
+    console.log( newX)
+    c.drawFrame( context, sptMap);
 }
 //ctx.drawImage(crawlerSprite, sX, sY, sW, sH, dX, dY, dW, dH)
 
