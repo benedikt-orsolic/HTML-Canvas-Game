@@ -63,8 +63,11 @@ class Crawler {
                 
                 /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 13 ? 3 : this.currentFrame.x;
                 break;
+            /* Right Up */
             case 7: 
-                this.currentPos.x += this.speed; this.currentPos.y += this.speed;
+                /* Move */this.currentPos.x += this.speed; this.currentPos.y -= this.speed;
+                
+                /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 14 ? 3 : this.currentFrame.x;
                 break;
             case 8:
                 break;
@@ -75,7 +78,7 @@ class Crawler {
         //console.log("current: x = " + String( this.currentPos.x ) + "; fW = " + String( this.frameW ) + "; CanvasW = " +  String( this.canvasW ) + ": Test = " + ((this.currentPos.x + this.frameW) > this.canvasW) ) ;
 
         if( this.currentPos.x + this.frameW > 0 &&
-            this.currentPos.x - this.frameW < this.canvasW +1 &&
+            this.currentPos.x - this.frameW < this.canvasW + 1 &&
             this.currentPos.y + this.frameH > 0 &&
             this.currentPos.y < this.canvasH ) return 0;
         else return 1;
@@ -118,8 +121,13 @@ class Crawler {
                 this.currentFrame.y = 3;
                 break;
             case 7: 
+                this.currentPos.x = 0 - this.frameW;
+                this.currentPos.y = this.canvasH;
+
+                this.currentFrame.x = 3;
+                this.currentFrame.y = 1;
                 break;
-            case 6:
+            case 8:
                 break;
             default:
                 console.log("Uknown direction: " + String(this.direction) );
@@ -134,8 +142,8 @@ const context = canvas.getContext('2d');
 
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-//Tested direction 0, 1, 4, 5, 6
-let c = new Crawler( 6, canvas.width, canvas.height );
+//Tested direction 0, 1, 4, 5, 6, 7
+let c = new Crawler( 7, canvas.width, canvas.height );
 
 let sptMap = new Image();
 sptMap.src = 'images/character.png';
