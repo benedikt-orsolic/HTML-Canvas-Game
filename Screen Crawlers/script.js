@@ -23,38 +23,50 @@ class Crawler {
             this.currentPos.x, this.currentPos.y, this.frameW, this.frameH);
 
         switch( this.dir ) {
+            /* Up */
             case 0:
                 /* Move */this.currentPos.y -= this.speed;
 
                 /* Frame */this.currentFrame.x++; this.currentFrame.x = this.currentFrame.x > 15 ? 3 : this.currentFrame.x;
                 break;
+            /* Left Up */
             case 1:
                 /* Move */this.currentPos.x -= this.speed; this.currentPos.y -= this.speed;
 
                 /* Frame */this.currentFrame.x++; this.currentFrame.x = this.currentFrame.x > 15 ? 3 : this.currentFrame.x;
                 break;
+            /* Left */
             case 2:
-                this.currentPos.x -= this.speed;
+                /* Move */this.currentPos.x -= this.speed;
+
+                /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 14 ? 3 : this.currentFrame.x;
                 break;
+            /* Left Down */
             case 3:
                 this.currentPos.x -= this.speed; this.currentPos.y += this.speed;
                 break;
+            /* Down */
             case 4:
-                this.currentPos.y += this.speed;
+                /* Move */this.currentPos.y += this.speed;
+
+                /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 13 ? 0 : this.currentFrame.x;
                 break;
+            /* Rigtht Down */
             case 5:
-                this.currentPos.x += this.speed; this.currentPos.y += this.speed;
+                /* Move */this.currentPos.x += this.speed; this.currentPos.y += this.speed;
+
+                /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 15 ? 4 : this.currentFrame.x;
                 break;
+            /* Right */
             case 6:
-                this.currentPos.x += this.speed;
+                /* Move */this.currentPos.x += this.speed;
                 
-                this.currentFrame.x++;
-                this.currentFrame.x = this.currentFrame.x > 13 ? 4 : this.currentFrame.x;
+                /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 13 ? 3 : this.currentFrame.x;
                 break;
             case 7: 
                 this.currentPos.x += this.speed; this.currentPos.y += this.speed;
                 break;
-            case 6:
+            case 8:
                 break;
             default:
                 console.log("Uknown direction: " + String(this.direction) );
@@ -62,7 +74,7 @@ class Crawler {
 
         //console.log("current: x = " + String( this.currentPos.x ) + "; fW = " + String( this.frameW ) + "; CanvasW = " +  String( this.canvasW ) + ": Test = " + ((this.currentPos.x + this.frameW) > this.canvasW) ) ;
 
-        if( this.currentPos.x > -1 &&
+        if( this.currentPos.x + this.frameW > 0 &&
             this.currentPos.x - this.frameW < this.canvasW +1 &&
             this.currentPos.y + this.frameH > 0 &&
             this.currentPos.y < this.canvasH ) return 0;
@@ -85,12 +97,25 @@ class Crawler {
             case 3:
                 break;
             case 4:
+                //this.currentPos.x = 0 < rnd < canvasH;
+                this.currentPos.y = 0 - this.frameH;
+
+                this.currentFrame.x = 0;
+                this.currentFrame.y = 6;
                 break;
             case 5:
+                this.currentPos.x = 0 - this.frameW;
+                this.currentPos.y = 0 - this.frameH;
+
+                this.currentFrame.x = 4;
+                this.currentFrame.y = 4;
                 break;
             case 6:
                 this.currentPos.x = 0 - this.frameW;
                 //this.currentPos.y = 0 < rnd < canvasH
+
+                this.currentFrame.x = 3;
+                this.currentFrame.y = 3;
                 break;
             case 7: 
                 break;
@@ -109,8 +134,8 @@ const context = canvas.getContext('2d');
 
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-
-let c = new Crawler( 0, canvas.width, canvas.height );
+//Tested direction 0, 1, 4, 5, 6
+let c = new Crawler( 6, canvas.width, canvas.height );
 
 let sptMap = new Image();
 sptMap.src = 'images/character.png';
