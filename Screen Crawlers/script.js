@@ -24,10 +24,14 @@ class Crawler {
 
         switch( this.dir ) {
             case 0:
-                this.currentPos.y -= this.speed;
+                /* Move */this.currentPos.y -= this.speed;
+
+                /* Frame */this.currentFrame.x++; this.currentFrame.x = this.currentFrame.x > 15 ? 3 : this.currentFrame.x;
                 break;
             case 1:
-                this.currentPos.x -= this.speed; this.currentPos.y -= this.speed;
+                /* Move */this.currentPos.x -= this.speed; this.currentPos.y -= this.speed;
+
+                /* Frame */this.currentFrame.x++; this.currentFrame.x = this.currentFrame.x > 15 ? 3 : this.currentFrame.x;
                 break;
             case 2:
                 this.currentPos.x -= this.speed;
@@ -58,13 +62,21 @@ class Crawler {
 
         //console.log("current: x = " + String( this.currentPos.x ) + "; fW = " + String( this.frameW ) + "; CanvasW = " +  String( this.canvasW ) + ": Test = " + ((this.currentPos.x + this.frameW) > this.canvasW) ) ;
 
-        if( this.currentPos.x - this.frameW < this.canvasW) return 0;
+        if( this.currentPos.x > -1 &&
+            this.currentPos.x - this.frameW < this.canvasW +1 &&
+            this.currentPos.y + this.frameH > 0 &&
+            this.currentPos.y < this.canvasH ) return 0;
         else return 1;
     }
 
     initFirstFrame( ) {
         switch( this.dir ) {
             case 0:
+                //this.currentPos.x = 0 < rnd < canvasH;
+                this.currentPos.y = this.canvasH;
+
+                this.currentFrame.x = 3;
+                this.currentFrame.y = 0;
                 break;
             case 1:
                 break;
@@ -98,7 +110,7 @@ const context = canvas.getContext('2d');
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
 
-let c = new Crawler( 6, canvas.width, canvas.height );
+let c = new Crawler( 0, canvas.width, canvas.height );
 
 let sptMap = new Image();
 sptMap.src = 'images/character.png';
@@ -116,8 +128,9 @@ sptMap.onload = function() {
 function animate(){
     context.clearRect(0, 0, canvas.width, canvas.height);
     if( !c.drawFrame( context, sptMap) ) {
-
+        console.log("Run!!")
     } else {
+        console.log("Exit!")
         clearInterval( intervalAnimate );
     }
     
