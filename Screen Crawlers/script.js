@@ -33,17 +33,19 @@ class Crawler {
             case 1:
                 /* Move */this.currentPos.x -= this.speed; this.currentPos.y -= this.speed;
 
-                /* Frame */this.currentFrame.x++; this.currentFrame.x = this.currentFrame.x > 15 ? 3 : this.currentFrame.x;
+                /* Frame */this.currentFrame.x = --this.currentFrame.x <= 1 ? 12 : this.currentFrame.x;
                 break;
             /* Left */
             case 2:
                 /* Move */this.currentPos.x -= this.speed;
 
-                /* Frame */this.currentFrame.x = ++this.currentFrame.x >= 14 ? 3 : this.currentFrame.x;
+                /* Frame */this.currentFrame.x = --this.currentFrame.x <= 2 ? 12 : this.currentFrame.x;
                 break;
             /* Left Down */
             case 3:
-                this.currentPos.x -= this.speed; this.currentPos.y += this.speed;
+                /* Move */this.currentPos.x -= this.speed; this.currentPos.y += this.speed;
+
+                /* Frame */this.currentFrame.x = --this.currentFrame.x <= 0 ? 11 : this.currentFrame.x;
                 break;
             /* Down */
             case 4:
@@ -94,10 +96,25 @@ class Crawler {
                 this.currentFrame.y = 0;
                 break;
             case 1:
+                this.currentPos.x = this.canvasW;
+                this.currentPos.y = this.canvasH;
+
+                this.currentFrame.x = 3;
+                this.currentFrame.y = 9;
                 break;
             case 2:
+                this.currentPos.x = this.canvasW;
+                //this.currentPos.y = this.canvasH;
+
+                this.currentFrame.x = 12;
+                this.currentFrame.y = 11;
                 break;
             case 3:
+                this.currentPos.x = this.canvasW;
+                this.currentPos.y = 0 - this.frameH;
+
+                this.currentFrame.x = 11;
+                this.currentFrame.y = 12;
                 break;
             case 4:
                 //this.currentPos.x = 0 < rnd < canvasH;
@@ -142,8 +159,13 @@ const context = canvas.getContext('2d');
 
 canvas.height = window.innerHeight;
 canvas.width = window.innerWidth;
-//Tested direction 0, 1, 4, 5, 6, 7
-let c = new Crawler( 7, canvas.width, canvas.height );
+
+let crawlerList = [];
+let maxCrawlers = 15;
+//Tested direction 0, 1, 2, 3, 4, 5, 6, 7
+let dir = 0
+let c = new Crawler( 0, canvas.width, canvas.height );
+let c1 = new Crawler( 5, canvas.width, canvas.height );
 
 let sptMap = new Image();
 sptMap.src = 'images/character.png';
@@ -153,20 +175,39 @@ let intervalAnimate = undefined;
 
 
 sptMap.onload = function() {
+    genrateCrawlers();
     intervalAnimate = setInterval(animate, 100);
+}
+
+
+function genrateCrawlers() {
+    while( crawlerList.length < maxCrawlers ) {
+        crawlerList.push( new Crawler( rnd(0, 7), canvas.width, canvas.height) );
+    }
+}
+
+
+
+function rnd (a, b) {
+    return Math.floor((Math.random() * b) + a);
 }
 
 
 
 function animate(){
     context.clearRect(0, 0, canvas.width, canvas.height);
-    if( !c.drawFrame( context, sptMap) ) {
-        console.log("Run!!")
-    } else {
-        console.log("Exit!")
-        clearInterval( intervalAnimate );
+    drawCrawlers();
+}
+
+
+
+function drawCrawlers() {
+    for( var i = 0; i < crawlerList.length; i++ ) {
+        
+        crawlerList[i].drawFrame( context, sptMap );
+        console.log( crawlerList[i].dir )
+        
     }
-    
 }
 //ctx.drawImage(crawlerSprite, sX, sY, sW, sH, dX, dY, dW, dH)
 
