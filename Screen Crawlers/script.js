@@ -1,3 +1,5 @@
+window.addEventListener('resize', windowResizeEvent);
+
 class Crawler {
     
     constructor (direction, canvasW, canvasH) {
@@ -283,3 +285,11 @@ function drawCrawlers() {
 }
 
 
+
+function windowResizeEvent() {
+    canvas.height = window.innerHeight
+    canvas.width = window.innerWidth
+
+    Crawler.canvasH = cnavas.height
+    Crawler.canvasW = canvas.width
+}
