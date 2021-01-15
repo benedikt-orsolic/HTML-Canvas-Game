@@ -1,4 +1,12 @@
+
+let maxCrawlers = 5     //Number of crawlers
+let frameTime = 100     //Time in ms each frame is shown ( 1 / frames per second )
+
+
+
 window.addEventListener('resize', windowResizeEvent);
+
+
 
 class Crawler {
 
@@ -228,7 +236,6 @@ let context = canvas.getContext('2d');
 windowResizeEvent()
 
 let crawlerList = [];
-let maxCrawlers = 5;
 
 let spriteSheet = new Image();
 spriteSheet.src = 'images/character.png';
@@ -244,7 +251,7 @@ spriteSheet.onload = function() {
     Crawler.ctxRef = Crawler.cRef.getContext('2d')
 
     genrateCrawlers();
-    intervalAnimate = setInterval(animate, 100);
+    intervalAnimate = setInterval(animate, frameTime);
 }
 
 
