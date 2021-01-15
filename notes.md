@@ -55,3 +55,4 @@
 # Resources
 
 * https://www.youtube.com/playlist?list=PLYElE_rzEw_sowQGjRdvwh9eAEt62d_Eu
+* https://developer.mozilla.org/en-US/
