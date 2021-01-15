@@ -1,31 +1,31 @@
 window.addEventListener('resize', windowResizeEvent);
 
 class Crawler {
+
+    static sptMap = undefined   //Sprite sheet
+    static cRef = undefined     //Canvas referenc
+    static ctxRef = undefined   //Cavans context referenc
     
-    constructor (direction, canvasW, canvasH) {
+    constructor (direction) {
         
         this.currentFrame = {x:0, y:3};  
         this.currentPos = {x:0, y:0};
         this.speed = 6;
 
         this.dir = direction;
-
         
         this.frameW = 103.0625;
         this.frameH = 113.125;
 
-        this.canvasW = canvasW;
-        this.canvasH = canvasH;
-
         this.initFirstFrame();
     }
 
-    drawFrame ( canvasContext, img ) {
-
-        canvasContext.drawImage(img, 
+    drawFrame () {
+        
+        Crawler.ctxRef.drawImage(Crawler.sptMap, 
             this.frameW * this.currentFrame.x, this.frameH * this.currentFrame.y, this.frameW, this.frameH, 
             this.currentPos.x, this.currentPos.y, this.frameW, this.frameH);
-
+        
         switch( this.dir ) {
             /* Up */
             case 0:
@@ -91,12 +91,10 @@ class Crawler {
                 break;
         }
 
-        //console.log("current: x = " + String( this.currentPos.x ) + "; fW = " + String( this.frameW ) + "; CanvasW = " +  String( this.canvasW ) + ": Test = " + ((this.currentPos.x + this.frameW) > this.canvasW) ) ;
-
         if( this.currentPos.x + this.frameW > 0 &&
-            this.currentPos.x - this.frameW < this.canvasW + 1 &&
+            this.currentPos.x - this.frameW < Crawler.cRef.width + 1 &&
             this.currentPos.y + this.frameH > 0 &&
-            this.currentPos.y < this.canvasH ) return 0;
+            this.currentPos.y < Crawler.cRef.height ) return 0;
         else return 1;
     }
 
@@ -108,8 +106,8 @@ class Crawler {
             /* Up */
             case 0:
 
-                this.currentPos.x = rnd(0, this.canvasW);
-                this.currentPos.y = this.canvasH;
+                this.currentPos.x = rnd(0, Crawler.cRef.width);
+                this.currentPos.y = Crawler.cRef.height;
 
                 this.currentFrame.x = 3;
                 this.currentFrame.y = 0;
@@ -119,12 +117,12 @@ class Crawler {
             case 1:
                 if( rnd(0,10) < 5 ) {
 
-                    this.currentPos.x = this.canvasW;
-                    this.currentPos.y = rnd(0 - this.frameH, this.canvasH);
+                    this.currentPos.x = Crawler.cRef.width;
+                    this.currentPos.y = rnd(0 - this.frameH, Crawler.cRef.height);
                 } else {
 
-                    this.currentPos.x = rnd(0 -this.frameW, this.canvasW);
-                    this.currentPos.y = this.canvasH;
+                    this.currentPos.x = rnd(0 -this.frameW, Crawler.cRef.width);
+                    this.currentPos.y = Crawler.cRef.height;
                 }
 
                 this.currentFrame.x = 3;
@@ -134,8 +132,8 @@ class Crawler {
             /* Left */
             case 2:
                 
-            this.currentPos.x = this.canvasW;
-                this.currentPos.y = rnd(0 - this.frameH, this.canvasH);
+            this.currentPos.x = Crawler.cRef.width;
+                this.currentPos.y = rnd(0 - this.frameH, Crawler.cRef.height);
 
                 this.currentFrame.x = 12;
                 this.currentFrame.y = 11;
@@ -146,12 +144,12 @@ class Crawler {
 
                 if( rnd(0,10) < 5 ) {
                     
-                    this.currentPos.x = rnd(0 - this.frameW, this.canvasW);
+                    this.currentPos.x = rnd(0 - this.frameW, Crawler.cRef.width);
                     this.currentPos.y = 0 - this.frameH;
                 } else {
                     
-                    this.currentPos.x = this.canvasW;
-                    this.currentPos.y = rnd(0 - this.frameH, this.canvasH);
+                    this.currentPos.x = Crawler.cRef.width;
+                    this.currentPos.y = rnd(0 - this.frameH, Crawler.cRef.height);
                 }
 
                 this.currentFrame.x = 11;
@@ -161,7 +159,7 @@ class Crawler {
             /* Down */
             case 4:
                 
-                this.currentPos.x = rnd(0 - this.frameW, this.canvasW);
+                this.currentPos.x = rnd(0 - this.frameW, Crawler.cRef.width);
                 this.currentPos.y = 0 - this.frameH;
 
                 this.currentFrame.x = 0;
@@ -174,10 +172,10 @@ class Crawler {
                 if( rnd(0,10) < 5 ) {
                     
                     this.currentPos.x = 0 - this.frameW;
-                    this.currentPos.y = rnd(0 - this.frameH, this.canvasH);
+                    this.currentPos.y = rnd(0 - this.frameH, Crawler.cRef.height);
                 } else {
                     
-                    this.currentPos.x = rnd(0 - this.frameW, this.canvasW);
+                    this.currentPos.x = rnd(0 - this.frameW, Crawler.cRef.width);
                     this.currentPos.y = 0 - this.frameH;
                 }
 
@@ -189,7 +187,7 @@ class Crawler {
             case 6:
                 
                 this.currentPos.x = 0 - this.frameW;
-                this.currentPos.y = rnd(0 - this.frameH, this.canvasH);
+                this.currentPos.y = rnd(0 - this.frameH, Crawler.cRef.height);
 
                 this.currentFrame.x = 3;
                 this.currentFrame.y = 3;
@@ -201,11 +199,11 @@ class Crawler {
                 if( rnd(0,10) < 5 ) {
                     
                     this.currentPos.x = 0 - this.frameW;
-                    this.currentPos.y = rnd(0 - this.frameH, this.canvasH);
+                    this.currentPos.y = rnd(0 - this.frameH, Crawler.cRef.height);
                 } else {
                     
-                    this.currentPos.x = rnd(0 - this.frameW, this.canvasW);
-                    this.currentPos.y = this.canvasH;
+                    this.currentPos.x = rnd(0 - this.frameW, Crawler.cRef.width);
+                    this.currentPos.y = Crawler.cRef.height;
                 }
 
                 this.currentFrame.x = 3;
@@ -224,24 +222,27 @@ class Crawler {
 
 
 
-const canvas = document.getElementById('canvas');
-const context = canvas.getContext('2d');
+let canvas = document.getElementById('canvas');
+let context = canvas.getContext('2d');
 
-canvas.height = window.innerHeight;
-canvas.width = window.innerWidth;
+windowResizeEvent()
 
 let crawlerList = [];
-let maxCrawlers = 15;
+let maxCrawlers = 5;
 
-let sptMap = new Image();
-sptMap.src = 'images/character.png';
+let spriteSheet = new Image();
+spriteSheet.src = 'images/character.png';
 
 let intervalAnimate = undefined;
 
 
 
-sptMap.onload = function() {
+spriteSheet.onload = function() {
     
+    Crawler.sptMap = spriteSheet
+    Crawler.cRef = document.getElementById('canvas')
+    Crawler.ctxRef = Crawler.cRef.getContext('2d')
+
     genrateCrawlers();
     intervalAnimate = setInterval(animate, 100);
 }
@@ -277,7 +278,7 @@ function drawCrawlers() {
     
     for( var i = 0; i < crawlerList.length; i++ ) {
         
-        if( crawlerList[i].drawFrame( context, sptMap ) ) {
+        if( crawlerList[i].drawFrame() ) {
             
             crawlerList[i] = new Crawler( rnd(0, 7), canvas.width, canvas.height);
         }
@@ -289,7 +290,4 @@ function drawCrawlers() {
 function windowResizeEvent() {
     canvas.height = window.innerHeight
     canvas.width = window.innerWidth
-
-    Crawler.canvasH = cnavas.height
-    Crawler.canvasW = canvas.width
 }
