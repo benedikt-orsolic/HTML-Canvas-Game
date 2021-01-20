@@ -1,0 +1,27 @@
+#canvas {
+    width: 98%;
+    height: 98%;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50% );
+
+    border: solid black 1px;   
+}
+
+#center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50% );
+
+    width: 5px;
+    height: 5px;
+
+    background-color: rgba(255, 255, 255, 0.5);
+
+    z-index: 100;
+}
